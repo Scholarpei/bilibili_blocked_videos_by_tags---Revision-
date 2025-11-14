@@ -1673,22 +1673,9 @@ function handleBlockedNameOrUid(videoBv) {
 
 // 🆕 确保 autoTriggerBlockUp 函数完整
 function autoTriggerBlockUp(videoBv) {
-  if (!videoInfoDict[videoBv] || !videoInfoDict[videoBv].videoUpUid) {
+    // 已完全禁用自动UP主屏蔽逻辑（不隐藏、不覆盖、不写入）
+    consoleLogOutput("[autoTriggerBlockUp] 已禁用：", upName, upUid);
     return;
-  }
-
-  const upUid = videoInfoDict[videoBv].videoUpUid;
-  const upName = videoInfoDict[videoBv].videoUpName;
-
-  consoleLogOutput("自动触发屏蔽UP主:", upName, "UID:", upUid);
-
-  // 调用屏蔽UP主的功能
-  triggerBlockUpEvent(null, {
-    bv: videoBv,
-    upUid: upUid,
-    upName: upName,
-    _vts: Date.now(),
-  });
 }
 
 function handleBlockedVideoPartitions(videoBv) {
