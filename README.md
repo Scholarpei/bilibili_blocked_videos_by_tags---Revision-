@@ -11,7 +11,25 @@
 
 # Bilibili Blocked Videos By Tags
 
+
+对原插件进行一定的魔改,主要为方便自己使用,内容包括:
+1.右下角添加**脚本配置**按钮,点击相当于打开配置界面,以便快速打开
+2.在每个视频推荐页面加入一个**快速添加屏蔽的按钮**,可以快速根据**UP主,Tag,分区**进行屏蔽
+3.在屏蔽的视频右上角添加一个**撤回**按钮,用于**临时查看**该屏蔽视频的内容（不会修改内部规则）
+
+
+## 效果图
+
+![](https://picture-storage-1301835005.cos.ap-guangzhou.myqcloud.com/Picture202511141558142.png)
+
+![](https://picture-storage-1301835005.cos.ap-guangzhou.myqcloud.com/Picture202511141559526.png)
+
+
+
+# 原作者README
+
 对 Bilibili.com 的视频卡片元素，以标题、UP 主、标签、双重标签、充电专属、收藏投币比、竖屏、时长、播放量、点赞率、视频分区、UP 主等级、UP 主粉丝数、UP 主简介、精选评论、置顶评论来判断匹配，添加覆盖叠加层或隐藏视频，隐藏或屏蔽热搜、附带去除广告等非视频元素的功能。
+
 
 欢迎订阅支持、提需求，您的赞助支持就是维护更新的最大动力！  
 最下方有赞助二维码，或者前往作者的爱发电：[https://afdian.com/a/tjxgame](https://afdian.com/a/tjxgame)
@@ -20,7 +38,7 @@
 **其实你们看一下“篡改猴”顶上的提示就知道了。**  
 **右上角三个点菜单->“扩展”->“管理扩展”->左下方打开“开发人员模式”**
 
-# 更新：
+## 更新：
 
 -   v1.4.5 功能故障修复：修复字节跳动 Vue CDN 失效所导致功能界面不正常问题，感谢[abh0r](https://github.com/abh0r)的提醒。
 
@@ -112,7 +130,7 @@
 
 ‍
 
-# 作者其他脚本：
+## 作者其他脚本：
 
 [Video Audio Compressor](https://greasyfork.org/zh-CN/scripts/489529-video-audio-compressor) （视频音量压缩器，防止耳聋，避免响度战争，压缩视频的最大音量）
 
@@ -120,7 +138,7 @@
 
 ‍
 
-# 实现逻辑：
+## 实现逻辑：
 
 先判黑后判白：标题>UP 主>充电专属>收藏投币比>竖屏>时长>播放量>点赞率>视频分区>UP 主等级>UP 主粉丝数>UP 主简介>标签>双重标签>精选评论>置顶评论>白名单
 
@@ -130,13 +148,13 @@
 
 ‍
 
-# 确认不兼容脚本：
+## 确认不兼容脚本：
 
 BewlyBewly
 
 ‍
 
-# 脚本兼容测试通过：
+## 脚本兼容测试通过：
 
 [bilibili-app-recommend](https://greasyfork.org/zh-CN/scripts/443530) （为 B 站首页添加像 App 一样的推荐）
 
@@ -144,7 +162,7 @@ BewlyBewly
 
 ‍
 
-# 相关链接：
+## 相关链接：
 
 -   Greasy Fork：[Bilibili 按标签、标题、时长，UP 主屏蔽视频](https://greasyfork.org/zh-CN/scripts/481629-bilibili-%E6%8C%89%E6%A0%87%E7%AD%BE-%E6%A0%87%E9%A2%98-%E6%97%B6%E9%95%BF-up%E4%B8%BB%E5%B1%8F%E8%94%BD%E8%A7%86%E9%A2%91)
 -   GitHub：[https://github.com/tjxwork/bilibili_blocked_videos_by_tags](https://github.com/tjxwork/bilibili_blocked_videos_by_tags)
@@ -155,7 +173,7 @@ BewlyBewly
 [![pkDjsf0.png](https://s21.ax1x.com/2024/06/22/pkDjsf0.png)](https://imgse.com/i/pkDjsf0)
 ‍
 
-# 赞助：
+## 赞助：
 
 有用的话，赞助作者吃桶泡面吧  
 也可以用爱发电按月订阅支持！  
