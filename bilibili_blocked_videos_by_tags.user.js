@@ -1671,10 +1671,9 @@ function handleBlockedNameOrUid(videoBv) {
   }
 }
 
-// 🆕 确保 autoTriggerBlockUp 函数完整
 function autoTriggerBlockUp(videoBv) {
-    // 已完全禁用自动UP主屏蔽逻辑（不隐藏、不覆盖、不写入）
-    consoleLogOutput("[autoTriggerBlockUp] 已禁用：", upName, upUid);
+    // 已禁用自动触发UP主屏蔽，不执行任何逻辑
+    consoleLogOutput("[autoTriggerBlockUp] 已禁用");
     return;
 }
 
@@ -1952,8 +1951,8 @@ function handleBlockedTag(videoBv) {
     return;
   }
 
-  consoleLogOutput(videoBv, "视频标签:", videoInfoDict[videoBv].videoTags);
-  consoleLogOutput(videoBv, "屏蔽标签列表:", blockedParameter.blockedTag_Array);
+  //consoleLogOutput(videoBv, "视频标签:", videoInfoDict[videoBv].videoTags);
+  //consoleLogOutput(videoBv, "屏蔽标签列表:", blockedParameter.blockedTag_Array);
 
   let blockedRulesItemText = "";
 
@@ -2031,7 +2030,7 @@ function handleDoubleBlockedTag(videoBv) {
     return;
   }
 
-  consoleLogOutput(
+  /*consoleLogOutput(
     videoBv,
     "视频标签(双重检查):",
     videoInfoDict[videoBv].videoTags
@@ -2040,7 +2039,7 @@ function handleDoubleBlockedTag(videoBv) {
     videoBv,
     "双重屏蔽标签列表:",
     blockedParameter.doubleBlockedTag_Array
-  );
+  );*/
 
   let blockedRulesItemText = "";
 
@@ -3091,8 +3090,72 @@ observer.observe(targetNode, config);
       }, 1500);
     });
 
+      // 🆕 添加 “拉黑此UP主” 按钮
+      const blacklistBtn = document.createElement("button");
+      blacklistBtn.innerHTML =
+          '<span style="margin-right: 5px;">⚠</span>拉黑此UP主';
+      blacklistBtn.style.padding = "10px 16px";
+      blacklistBtn.style.background = "#a52828";
+      blacklistBtn.style.color = "#fff";
+      blacklistBtn.style.border = "none";
+      blacklistBtn.style.borderRadius = "6px";
+      blacklistBtn.style.cursor = "pointer";
+      blacklistBtn.style.transition = "all 0.2s ease";
+      blacklistBtn.style.fontSize = "14px";
+      blacklistBtn.style.display = "flex";
+      blacklistBtn.style.alignItems = "center";
+
+      blacklistBtn.addEventListener("mouseover", () => {
+          blacklistBtn.style.background = "#b53030";
+      });
+      blacklistBtn.addEventListener("mouseout", () => {
+          blacklistBtn.style.background = "#a52828";
+      });
+
+      blacklistBtn.addEventListener("click", async () => {
+          blacklistBtn.innerHTML = "处理中…";
+          blacklistBtn.style.background = "#777";
+          blacklistBtn.disabled = true;
+
+          try {
+              const csrf = document.cookie.match(/bili_jct=([^;]+)/)?.[1];
+              if (!csrf) {
+                  blacklistBtn.innerHTML = "缺少csrf";
+                  return;
+              }
+
+              const res = await fetch("https://api.bilibili.com/x/relation/modify", {
+                  method: "POST",
+                  credentials: "include",
+                  headers: {
+                      "Content-Type": "application/x-www-form-urlencoded"
+                  },
+                  body: `fid=${upUid}&act=5&re_src=11&csrf=${csrf}`
+              }).then(r => r.json());
+
+              if (res.code === 0) {
+                  blacklistBtn.innerHTML = "已拉黑";
+                  blacklistBtn.style.background = "#4caf50";
+              } else {
+                  blacklistBtn.innerHTML = "失败：" + res.message;
+                  blacklistBtn.style.background = "#a52828";
+              }
+          } catch (err) {
+              blacklistBtn.innerHTML = "异常";
+              blacklistBtn.style.background = "#a52828";
+              console.error("拉黑接口错误：", err);
+          }
+
+          setTimeout(() => {
+              blacklistBtn.innerHTML = '<span style="margin-right: 5px;">⚠</span>拉黑此UP主';
+              blacklistBtn.style.background = "#a52828";
+              blacklistBtn.disabled = false;
+          }, 2000);
+      });
+
     interestButtonsContainer.appendChild(notInterestedBtn);
     interestButtonsContainer.appendChild(blockUpBtn);
+    interestButtonsContainer.appendChild(blacklistBtn); // 快速拉黑button
     interestSection.appendChild(interestButtonsContainer);
     modal.appendChild(interestSection);
 
