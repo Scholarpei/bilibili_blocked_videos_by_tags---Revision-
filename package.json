@@ -1,0 +1,14 @@
+{
+  "name": "bilibili-blocked-videos-by-tags-revision",
+  "version": "1.5.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "build": "node scripts/build-userscript.mjs",
+    "check": "npm test && npm run build && node --check bilibili_blocked_videos_by_tags.user.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.11"
+  }
+}
