@@ -1508,38 +1508,63 @@
   };
 
   // src/settings-panel.js
-  var OPTION_DEFS = [
-    { kind: "number", switchKey: "blockedBelowVideoFavorite_Switch", valueKey: "blockedBelowVideoFavorite", label: "\u5C4F\u853D\u4F4E\u4E8E\u6B64\u6536\u85CF\u6570\u7684\u89C6\u9891(?)", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u6536\u85CF\u6570\u540E\u5224\u65AD\u7684", unit: "\u6B21" },
-    { kind: "list", switchKey: "blockedTitle_Switch", regexKey: "blockedTitle_UseRegular", listKey: "blockedTitle_Array", label: "\u6309\u6807\u9898\u5C4F\u853D\u89C6\u9891(?)", title: "\u4E0D\u9700\u8981API\uFF0C\u7F51\u9875\u4E0A\u76F4\u63A5\u6709\u6807\u9898\u4FE1\u606F", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
-    { kind: "list", switchKey: "blockedNameOrUid_Switch", regexKey: "blockedNameOrUid_UseRegular", listKey: "blockedNameOrUid_Array", label: "\u6309UP\u540D\u79F0\u6216Uid\u5C4F\u853D\u89C6\u9891(?)", title: "\u5927\u90E8\u5206\u60C5\u51B5\u4E5F\u662F\u53EF\u4EE5\u5728\u7F51\u9875\u4E0A\u76F4\u63A5\u62FF\u5230", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
-    { kind: "list", switchKey: "blockedTag_Switch", regexKey: "blockedTag_UseRegular", listKey: "blockedTag_Array", label: "\u6309\u6807\u7B7E\u5C4F\u853D\u89C6\u9891(?)", title: "\u6807\u7B7EAPI\uFF0C\u8981\u6CE8\u610F\u6709\u4E00\u4E9B\u6807\u7B7E\u53EF\u80FD\u662F\u5206\u533A", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
-    { kind: "list", switchKey: "doubleBlockedTag_Switch", regexKey: "doubleBlockedTag_UseRegular", listKey: "doubleBlockedTag_Array", label: "\u6309\u53CC\u91CD\u6807\u7B7E\u5C4F\u853D\u89C6\u9891(?)", title: "\u89C6\u9891\u5305\u542B\u4E00\u5BF9\u6307\u5B9A\u6807\u7B7E\u65F6\u624D\u4F1A\u751F\u6548\uFF0C\u4F8B\u5982\uFF1A\u539F\u795E|\u9E23\u6F6E", placeholder: '\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694(\u4EE5"A\u6807\u7B7E|B\u6807\u7B7E"\u683C\u5F0F\u6DFB\u52A0)' },
-    { kind: "switch", switchKey: "blockedChargingExclusive_Switch", label: "\u5C4F\u853D\u5145\u7535\u4E13\u5C5E\u7684\u89C6\u9891(?)", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u5145\u7535\u89C6\u9891\u6807\u8BB0\u540E\u5224\u65AD\u7684" },
-    { kind: "number", switchKey: "blockedAboveFavoriteCoinRatio_Switch", valueKey: "blockedAboveFavoriteCoinRatio", label: "\u5C4F\u853D\u9AD8\u4E8E\u6B64\u6536\u85CF/\u6295\u5E01\u6BD4\u7684\u89C6\u9891(?)", title: "\u53EA\u5904\u7406\u64AD\u653E\u65705000+\u3001\u6536\u85CF\u657050+\u3001\u53D1\u5E03\u65F6\u95F42\u5C0F\u65F6+\u7684\u89C6\u9891" },
-    { kind: "switch", switchKey: "blockedPortraitVideo_Switch", label: "\u5C4F\u853D\u7AD6\u5C4F\u89C6\u9891(?)", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u5206\u8FA8\u7387\u540E\u5224\u65AD\u7684" },
-    { kind: "number", switchKey: "blockedShortDuration_Switch", valueKey: "blockedShortDuration", label: "\u5C4F\u853D\u4F4E\u4E8E\u6B64\u65F6\u957F\u7684\u89C6\u9891(?)", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u65F6\u957F\u540E\u5224\u65AD\u7684", unit: "\u79D2" },
-    { kind: "number", switchKey: "blockedBelowVideoViews_Switch", valueKey: "blockedBelowVideoViews", label: "\u5C4F\u853D\u4F4E\u4E8E\u6B64\u64AD\u653E\u91CF\u7684\u89C6\u9891(?)", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u64AD\u653E\u91CF\u540E\u5224\u65AD\u7684", unit: "\u6B21" },
-    { kind: "number", switchKey: "blockedBelowLikesRate_Switch", valueKey: "blockedBelowLikesRate", label: "\u5C4F\u853D\u4F4E\u4E8E\u6B64\u70B9\u8D5E\u7387\u7684\u89C6\u9891(?)", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u64AD\u653E\u91CF\u548C\u70B9\u8D5E\u6570\u540E\u5224\u65AD\u7684", unit: "%" },
-    { kind: "number", switchKey: "blockedBelowCoinRate_Switch", valueKey: "blockedBelowCoinRate", label: "\u5C4F\u853D\u4F4E\u4E8E\u6B64\u6295\u5E01\u7387\u7684\u89C6\u9891(?)", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u64AD\u653E\u91CF\u548C\u6295\u5E01\u6570\u540E\u5224\u65AD\u7684", unit: "%" },
-    { kind: "list", switchKey: "blockedVideoPartitions_Switch", regexKey: "blockedVideoPartitions_UseRegular", listKey: "blockedVideoPartitions_Array", label: "\u6309\u89C6\u9891\u5206\u533A\u5C4F\u853D\u89C6\u9891(?)", title: "\u89C6\u9891API\uFF0C\u73B0\u5728\u89C6\u9891\u7684\u5206\u533A\u53EF\u80FD\u4E0D\u662F\u5F88\u597D\u786E\u5B9A\u540D\u5B57\uFF0C\u53EF\u4EE5\u770B\u65E5\u5FD7\u6765\u5224\u65AD", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
-    { kind: "number", switchKey: "blockedBelowUpLevel_Switch", valueKey: "blockedBelowUpLevel", label: "\u5C4F\u853D\u4F4E\u4E8E\u6B64UP\u4E3B\u7B49\u7EA7\u7684\u89C6\u9891(?)", title: "UP\u4E3BAPI\uFF0C\u662F\u62FF\u5230UP\u4E3B\u7684\u7B49\u7EA7\u4FE1\u606F\u540E\u5224\u65AD\u7684", unit: "\u7EA7" },
-    { kind: "number", switchKey: "blockedBelowUpFans_Switch", valueKey: "blockedBelowUpFans", label: "\u5C4F\u853D\u4F4E\u4E8E\u6B64UP\u4E3B\u7C89\u4E1D\u6570\u7684\u89C6\u9891(?)", title: "UP\u4E3BAPI\uFF0C\u662F\u62FF\u5230UP\u4E3B\u7684\u7C89\u4E1D\u6570\u540E\u5224\u65AD\u7684", unit: "\u4EBA" },
-    { kind: "number", switchKey: "blockedAboveUpAttention_Switch", valueKey: "blockedAboveUpAttention", label: "\u5C4F\u853D\u9AD8\u4E8E\u6B64UP\u4E3B\u5173\u6CE8\u6570\u7684\u89C6\u9891(?)", title: "UP\u4E3BAPI\uFF0C\u662F\u62FF\u5230UP\u4E3B\u7684\u5173\u6CE8\u6570\u540E\u5224\u65AD\u7684", unit: "\u4EBA" },
-    { kind: "list", switchKey: "blockedUpSigns_Switch", regexKey: "blockedUpSigns_UseRegular", listKey: "blockedUpSigns_Array", label: "\u6309UP\u4E3B\u7B80\u4ECB\u5C4F\u853D\u89C6\u9891(?)", title: "UP\u4E3BAPI\uFF0C\u662F\u62FF\u5230UP\u4E3B\u7684\u7B80\u4ECB\u540E\u5224\u65AD\u7684", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
-    { kind: "switch", switchKey: "blockedFilteredCommentsVideo_Switch", label: "\u5C4F\u853D\u7CBE\u9009\u8BC4\u8BBA\u7684\u89C6\u9891(?)", title: "\u8BC4\u8BBAAPI\uFF0C\u6781\u6613\u8BF7\u6C42\u8FC7\u591A\u5BFC\u81F4\u62D2\u7EDD" },
-    { kind: "list", switchKey: "blockedTopComment_Switch", regexKey: "blockedTopComment_UseRegular", listKey: "blockedTopComment_Array", label: "\u6309\u7F6E\u9876\u8BC4\u8BBA\u5C4F\u853D\u89C6\u9891(?)", title: "\u8BC4\u8BBAAPI\uFF0C\u6781\u6613\u8BF7\u6C42\u8FC7\u591A\u5BFC\u81F4\u62D2\u7EDD", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
-    { kind: "list", switchKey: "whitelistNameOrUid_Switch", listKey: "whitelistNameOrUid_Array", label: "\u6309UP\u540D\u79F0\u6216Uid\u907F\u514D\u5C4F\u853D\u89C6\u9891(?)", title: "\u767D\u540D\u5355\uFF0C\u5728\u6700\u540E\u8FDB\u884C\u7684\u5224\u65AD\uFF0C\u6709\u6700\u9AD8\u7684\u4F18\u5148\u7EA7", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
-    { kind: "switch", switchKey: "hideTrending_Switch", label: "\u9690\u85CF\u641C\u7D22\u6846\u7684\u70ED\u641C\u5185\u5BB9(?)", title: "\u76F4\u63A5\u9690\u85CF\u6240\u6709\u7684\u70ED\u641C\u9879" },
-    { kind: "switch", switchKey: "blockedTrendingItemByTitleTag_Switch", label: "\u6309\u5DF2\u6709\u7684\u6807\u9898\u9879\u5C4F\u853D\u70ED\u641C\u9879(?)", title: "\u76F4\u63A5\u6309\u5DF2\u6709\u6807\u9898\u5C4F\u853D\u9879\u6765\u5C4F\u853D\u70ED\u641C\u9879" },
-    { kind: "list", switchKey: "blockedTrendingItem_Switch", regexKey: "blockedTrendingItem_UseRegular", listKey: "blockedTrendingItem_Array", label: "\u6309\u5173\u952E\u5B57\u5C4F\u853D\u70ED\u641C\u9879(?)", title: "\u7C7B\u4F3C\u6807\u9898\u7684\u7528\u6CD5", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
-    { kind: "switch", switchKey: "hideNonVideoElements_Switch", label: "\u9690\u85CF\u9996\u9875\u7B49\u9875\u9762\u7684\u975E\u89C6\u9891\u5143\u7D20(?)", title: "\u53BB\u5E7F\u544A\u3001\u76F4\u64AD\u3001\u63A8\u5E7F\u7B49\u975E\u6295\u7A3F\u89C6\u9891\u5185\u5BB9" },
-    { kind: "switch", switchKey: "blockedOverlayOnlyDisplaysType_Switch", label: "\u5C4F\u853D\u53E0\u52A0\u5C42\u7684\u63D0\u793A\u53EA\u663E\u793A\u7C7B\u578B(?)", title: "\u9632\u6B62\u663E\u793A\u547D\u4E2D\u7684\u5C4F\u853D\u8BCD" },
-    { kind: "switch", switchKey: "hideVideoMode_Switch", label: "\u9690\u85CF\u89C6\u9891\u800C\u4E0D\u662F\u4F7F\u7528\u53E0\u52A0\u5C42\u8986\u76D6(?)", title: "\u9690\u85CF\u89C6\u9891\u800C\u4E0D\u662F\u4F7F\u7528\u53E0\u52A0\u5C42\u8986\u76D6" },
-    { kind: "switch", switchKey: "consoleOutputLog_Switch", label: "\u63A7\u5236\u53F0\u8F93\u51FA\u65E5\u5FD7\u5F00\u5173(?)", title: "\u8F93\u51FA\u8C03\u8BD5\u65E5\u5FD7" }
+  var OPTION_GROUPS = [
+    {
+      title: "\u5E38\u7528\u89C4\u5219",
+      summary: "\u6807\u9898\u3001UP\u3001\u6807\u7B7E\u548C\u767D\u540D\u5355\uFF0C\u4F18\u5148\u914D\u7F6E\u8FD9\u91CC\u3002",
+      options: [
+        { kind: "list", switchKey: "blockedTitle_Switch", regexKey: "blockedTitle_UseRegular", listKey: "blockedTitle_Array", label: "\u6309\u6807\u9898\u5C4F\u853D", title: "\u4E0D\u9700\u8981API\uFF0C\u7F51\u9875\u4E0A\u76F4\u63A5\u6709\u6807\u9898\u4FE1\u606F", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
+        { kind: "list", switchKey: "blockedNameOrUid_Switch", regexKey: "blockedNameOrUid_UseRegular", listKey: "blockedNameOrUid_Array", label: "\u6309UP\u540D\u79F0\u6216Uid\u5C4F\u853D", title: "\u5927\u90E8\u5206\u60C5\u51B5\u4E5F\u662F\u53EF\u4EE5\u5728\u7F51\u9875\u4E0A\u76F4\u63A5\u62FF\u5230", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
+        { kind: "list", switchKey: "blockedTag_Switch", regexKey: "blockedTag_UseRegular", listKey: "blockedTag_Array", label: "\u6309\u6807\u7B7E\u5C4F\u853D", title: "\u6807\u7B7EAPI\uFF0C\u8981\u6CE8\u610F\u6709\u4E00\u4E9B\u6807\u7B7E\u53EF\u80FD\u662F\u5206\u533A", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
+        { kind: "list", switchKey: "doubleBlockedTag_Switch", regexKey: "doubleBlockedTag_UseRegular", listKey: "doubleBlockedTag_Array", label: "\u6309\u53CC\u91CD\u6807\u7B7E\u5C4F\u853D", title: "\u89C6\u9891\u5305\u542B\u4E00\u5BF9\u6307\u5B9A\u6807\u7B7E\u65F6\u624D\u4F1A\u751F\u6548\uFF0C\u4F8B\u5982\uFF1A\u539F\u795E|\u9E23\u6F6E", placeholder: '\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694(\u4EE5"A\u6807\u7B7E|B\u6807\u7B7E"\u683C\u5F0F\u6DFB\u52A0)' },
+        { kind: "list", switchKey: "whitelistNameOrUid_Switch", listKey: "whitelistNameOrUid_Array", label: "UP\u767D\u540D\u5355", title: "\u767D\u540D\u5355\uFF0C\u5728\u6700\u540E\u8FDB\u884C\u7684\u5224\u65AD\uFF0C\u6709\u6700\u9AD8\u7684\u4F18\u5148\u7EA7", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" }
+      ]
+    },
+    {
+      title: "\u89C6\u9891\u6307\u6807",
+      summary: "\u57FA\u4E8E\u64AD\u653E\u3001\u6536\u85CF\u3001\u70B9\u8D5E\u3001\u65F6\u957F\u7B49\u89C6\u9891API\u6570\u636E\u5224\u65AD\u3002",
+      options: [
+        { kind: "number", switchKey: "blockedBelowVideoFavorite_Switch", valueKey: "blockedBelowVideoFavorite", label: "\u4F4E\u4E8E\u6536\u85CF\u6570", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u6536\u85CF\u6570\u540E\u5224\u65AD\u7684", unit: "\u6B21" },
+        { kind: "number", switchKey: "blockedAboveFavoriteCoinRatio_Switch", valueKey: "blockedAboveFavoriteCoinRatio", label: "\u9AD8\u4E8E\u6536\u85CF/\u6295\u5E01\u6BD4", title: "\u53EA\u5904\u7406\u64AD\u653E\u65705000+\u3001\u6536\u85CF\u657050+\u3001\u53D1\u5E03\u65F6\u95F42\u5C0F\u65F6+\u7684\u89C6\u9891" },
+        { kind: "number", switchKey: "blockedShortDuration_Switch", valueKey: "blockedShortDuration", label: "\u4F4E\u4E8E\u89C6\u9891\u65F6\u957F", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u65F6\u957F\u540E\u5224\u65AD\u7684", unit: "\u79D2" },
+        { kind: "number", switchKey: "blockedBelowVideoViews_Switch", valueKey: "blockedBelowVideoViews", label: "\u4F4E\u4E8E\u64AD\u653E\u91CF", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u64AD\u653E\u91CF\u540E\u5224\u65AD\u7684", unit: "\u6B21" },
+        { kind: "number", switchKey: "blockedBelowLikesRate_Switch", valueKey: "blockedBelowLikesRate", label: "\u4F4E\u4E8E\u70B9\u8D5E\u7387", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u64AD\u653E\u91CF\u548C\u70B9\u8D5E\u6570\u540E\u5224\u65AD\u7684", unit: "%" },
+        { kind: "number", switchKey: "blockedBelowCoinRate_Switch", valueKey: "blockedBelowCoinRate", label: "\u4F4E\u4E8E\u6295\u5E01\u7387", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u64AD\u653E\u91CF\u548C\u6295\u5E01\u6570\u540E\u5224\u65AD\u7684", unit: "%" },
+        { kind: "switch", switchKey: "blockedChargingExclusive_Switch", label: "\u5C4F\u853D\u5145\u7535\u4E13\u5C5E", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u5145\u7535\u89C6\u9891\u6807\u8BB0\u540E\u5224\u65AD\u7684" },
+        { kind: "switch", switchKey: "blockedPortraitVideo_Switch", label: "\u5C4F\u853D\u7AD6\u5C4F\u89C6\u9891", title: "\u89C6\u9891API\uFF0C\u662F\u62FF\u5230\u89C6\u9891\u7684\u5206\u8FA8\u7387\u540E\u5224\u65AD\u7684" },
+        { kind: "list", switchKey: "blockedVideoPartitions_Switch", regexKey: "blockedVideoPartitions_UseRegular", listKey: "blockedVideoPartitions_Array", label: "\u6309\u89C6\u9891\u5206\u533A\u5C4F\u853D", title: "\u89C6\u9891API\uFF0C\u73B0\u5728\u89C6\u9891\u7684\u5206\u533A\u53EF\u80FD\u4E0D\u662F\u5F88\u597D\u786E\u5B9A\u540D\u5B57\uFF0C\u53EF\u4EE5\u770B\u65E5\u5FD7\u6765\u5224\u65AD", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" }
+      ]
+    },
+    {
+      title: "UP\u4E3B\u4E0E\u8BC4\u8BBA",
+      summary: "\u57FA\u4E8EUP\u4E3B\u4FE1\u606F\u548C\u8BC4\u8BBAAPI\uFF0C\u8BC4\u8BBA\u76F8\u5173\u8BF7\u6C42\u66F4\u91CD\u3002",
+      options: [
+        { kind: "number", switchKey: "blockedBelowUpLevel_Switch", valueKey: "blockedBelowUpLevel", label: "\u4F4E\u4E8EUP\u4E3B\u7B49\u7EA7", title: "UP\u4E3BAPI\uFF0C\u662F\u62FF\u5230UP\u4E3B\u7684\u7B49\u7EA7\u4FE1\u606F\u540E\u5224\u65AD\u7684", unit: "\u7EA7" },
+        { kind: "number", switchKey: "blockedBelowUpFans_Switch", valueKey: "blockedBelowUpFans", label: "\u4F4E\u4E8EUP\u4E3B\u7C89\u4E1D\u6570", title: "UP\u4E3BAPI\uFF0C\u662F\u62FF\u5230UP\u4E3B\u7684\u7C89\u4E1D\u6570\u540E\u5224\u65AD\u7684", unit: "\u4EBA" },
+        { kind: "number", switchKey: "blockedAboveUpAttention_Switch", valueKey: "blockedAboveUpAttention", label: "\u9AD8\u4E8EUP\u4E3B\u5173\u6CE8\u6570", title: "UP\u4E3BAPI\uFF0C\u662F\u62FF\u5230UP\u4E3B\u7684\u5173\u6CE8\u6570\u540E\u5224\u65AD\u7684", unit: "\u4EBA" },
+        { kind: "list", switchKey: "blockedUpSigns_Switch", regexKey: "blockedUpSigns_UseRegular", listKey: "blockedUpSigns_Array", label: "\u6309UP\u4E3B\u7B80\u4ECB\u5C4F\u853D", title: "UP\u4E3BAPI\uFF0C\u662F\u62FF\u5230UP\u4E3B\u7684\u7B80\u4ECB\u540E\u5224\u65AD\u7684", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
+        { kind: "switch", switchKey: "blockedFilteredCommentsVideo_Switch", label: "\u5C4F\u853D\u7CBE\u9009\u8BC4\u8BBA\u89C6\u9891", title: "\u8BC4\u8BBAAPI\uFF0C\u6781\u6613\u8BF7\u6C42\u8FC7\u591A\u5BFC\u81F4\u62D2\u7EDD" },
+        { kind: "list", switchKey: "blockedTopComment_Switch", regexKey: "blockedTopComment_UseRegular", listKey: "blockedTopComment_Array", label: "\u6309\u7F6E\u9876\u8BC4\u8BBA\u5C4F\u853D", title: "\u8BC4\u8BBAAPI\uFF0C\u6781\u6613\u8BF7\u6C42\u8FC7\u591A\u5BFC\u81F4\u62D2\u7EDD", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" }
+      ]
+    },
+    {
+      title: "\u9875\u9762\u663E\u793A",
+      summary: "\u70ED\u641C\u3001\u975E\u89C6\u9891\u5143\u7D20\u3001\u53E0\u52A0\u5C42\u4E0E\u8C03\u8BD5\u9009\u9879\u3002",
+      options: [
+        { kind: "switch", switchKey: "hideTrending_Switch", label: "\u9690\u85CF\u641C\u7D22\u6846\u70ED\u641C", title: "\u76F4\u63A5\u9690\u85CF\u6240\u6709\u7684\u70ED\u641C\u9879" },
+        { kind: "switch", switchKey: "blockedTrendingItemByTitleTag_Switch", label: "\u7528\u6807\u9898\u89C4\u5219\u5C4F\u853D\u70ED\u641C", title: "\u76F4\u63A5\u6309\u5DF2\u6709\u6807\u9898\u5C4F\u853D\u9879\u6765\u5C4F\u853D\u70ED\u641C\u9879" },
+        { kind: "list", switchKey: "blockedTrendingItem_Switch", regexKey: "blockedTrendingItem_UseRegular", listKey: "blockedTrendingItem_Array", label: "\u6309\u5173\u952E\u5B57\u5C4F\u853D\u70ED\u641C", title: "\u7C7B\u4F3C\u6807\u9898\u7684\u7528\u6CD5", placeholder: "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694" },
+        { kind: "switch", switchKey: "hideNonVideoElements_Switch", label: "\u9690\u85CF\u975E\u89C6\u9891\u5143\u7D20", title: "\u53BB\u5E7F\u544A\u3001\u76F4\u64AD\u3001\u63A8\u5E7F\u7B49\u975E\u6295\u7A3F\u89C6\u9891\u5185\u5BB9" },
+        { kind: "switch", switchKey: "blockedOverlayOnlyDisplaysType_Switch", label: "\u53E0\u52A0\u5C42\u53EA\u663E\u793A\u7C7B\u578B", title: "\u9632\u6B62\u663E\u793A\u547D\u4E2D\u7684\u5C4F\u853D\u8BCD" },
+        { kind: "switch", switchKey: "hideVideoMode_Switch", label: "\u76F4\u63A5\u9690\u85CF\u89C6\u9891", title: "\u9690\u85CF\u89C6\u9891\u800C\u4E0D\u662F\u4F7F\u7528\u53E0\u52A0\u5C42\u8986\u76D6" },
+        { kind: "switch", switchKey: "consoleOutputLog_Switch", label: "\u63A7\u5236\u53F0\u65E5\u5FD7", title: "\u8F93\u51FA\u8C03\u8BD5\u65E5\u5FD7" }
+      ]
+    }
   ];
   function checkbox(checked, onChange) {
     const input = document.createElement("input");
     input.type = "checkbox";
+    input.className = "bbt-switch";
     input.checked = Boolean(checked);
     input.addEventListener("change", () => onChange(input.checked));
     return input;
@@ -1568,9 +1593,17 @@
     header.className = "bbt-menu-header";
     const title = document.createElement("div");
     title.className = "bbt-menu-title";
-    title.textContent = "Bilibili\u6309\u6807\u7B7E\u3001\u6807\u9898\u3001\u65F6\u957F\u3001UP\u4E3B\u5C4F\u853D\u89C6\u9891 v1.5.0";
-    header.appendChild(title);
-    header.appendChild(makeButton("\u5173\u95ED", closePanel, "bbt-modal-close"));
+    title.textContent = "\u811A\u672C\u914D\u7F6E";
+    const subtitle = document.createElement("div");
+    subtitle.className = "bbt-menu-subtitle";
+    subtitle.textContent = "Bilibili \u89C6\u9891\u5C4F\u853D\u89C4\u5219 v1.5.0";
+    const titleWrap = document.createElement("div");
+    titleWrap.appendChild(title);
+    titleWrap.appendChild(subtitle);
+    header.appendChild(titleWrap);
+    const closeButton = makeButton("", closePanel, "bbt-modal-close");
+    closeButton.title = "\u5173\u95ED";
+    header.appendChild(closeButton);
     panel.appendChild(header);
     const prompt = document.createElement("div");
     prompt.id = "blockedMenuPrompt";
@@ -1594,65 +1627,96 @@
           makeButton("x", () => {
             removeListItem(draft, def.listKey, index);
             renderList(ul, def);
-          })
+          }, "bbt-chip-remove")
         );
         ul.appendChild(li);
       });
     };
-    for (const def of OPTION_DEFS) {
-      const row = document.createElement("div");
-      row.className = "bbt-option";
-      const label = document.createElement("label");
-      label.title = def.title;
-      label.appendChild(
-        checkbox(draft[def.switchKey], (checked) => {
-          draft[def.switchKey] = checked;
-        })
-      );
-      label.append(def.label);
-      row.appendChild(label);
-      if (def.regexKey) {
-        const regexLabel = document.createElement("label");
-        regexLabel.title = "\u6B63\u5219\u662F\u4EC0\u4E48\u53EF\u4EE5\u95EEAI\uFF0C\u4F60\u4E5F\u53EF\u4EE5\u7406\u89E3\u6210\u6A21\u7CCA\u5339\u914D";
-        regexLabel.appendChild(
-          checkbox(draft[def.regexKey], (checked) => {
-            draft[def.regexKey] = checked;
+    for (const groupDef of OPTION_GROUPS) {
+      const section2 = document.createElement("section");
+      section2.className = "bbt-option-group";
+      const groupHeader = document.createElement("div");
+      groupHeader.className = "bbt-option-group-header";
+      const groupTitle = document.createElement("h3");
+      groupTitle.textContent = groupDef.title;
+      const groupSummary = document.createElement("p");
+      groupSummary.textContent = groupDef.summary;
+      groupHeader.appendChild(groupTitle);
+      groupHeader.appendChild(groupSummary);
+      section2.appendChild(groupHeader);
+      for (const def of groupDef.options) {
+        const row = document.createElement("div");
+        row.className = `bbt-option bbt-option-${def.kind}`;
+        const main = document.createElement("div");
+        main.className = "bbt-option-main";
+        const label = document.createElement("label");
+        label.className = "bbt-option-label";
+        label.title = def.title;
+        label.appendChild(
+          checkbox(draft[def.switchKey], (checked) => {
+            draft[def.switchKey] = checked;
           })
         );
-        regexLabel.append("\u542F\u7528\u6B63\u5219(?)");
-        row.appendChild(regexLabel);
-      } else {
-        row.appendChild(document.createElement("span"));
+        label.append(def.label);
+        const hint = document.createElement("div");
+        hint.className = "bbt-option-hint";
+        hint.textContent = def.title;
+        main.appendChild(label);
+        main.appendChild(hint);
+        row.appendChild(main);
+        const controls = document.createElement("div");
+        controls.className = "bbt-option-controls";
+        if (def.regexKey) {
+          const regexLabel = document.createElement("label");
+          regexLabel.className = "bbt-regex-toggle";
+          regexLabel.title = "\u6B63\u5219\u662F\u4EC0\u4E48\u53EF\u4EE5\u95EEAI\uFF0C\u4F60\u4E5F\u53EF\u4EE5\u7406\u89E3\u6210\u6A21\u7CCA\u5339\u914D";
+          regexLabel.appendChild(
+            checkbox(draft[def.regexKey], (checked) => {
+              draft[def.regexKey] = checked;
+            })
+          );
+          regexLabel.append("\u6B63\u5219");
+          controls.appendChild(regexLabel);
+        }
+        if (def.kind === "number") {
+          const valueWrap = document.createElement("div");
+          valueWrap.className = "bbt-number-field";
+          const input = document.createElement("input");
+          input.type = "number";
+          input.value = draft[def.valueKey];
+          input.addEventListener("input", () => {
+            draft[def.valueKey] = Number(input.value || 0);
+          });
+          valueWrap.appendChild(input);
+          if (def.unit) {
+            const unit = document.createElement("span");
+            unit.textContent = def.unit;
+            valueWrap.appendChild(unit);
+          }
+          controls.appendChild(valueWrap);
+        } else if (def.kind === "list") {
+          const wrapper = document.createElement("div");
+          wrapper.className = "bbt-list-row";
+          const input = document.createElement("input");
+          input.type = "text";
+          input.placeholder = def.placeholder || "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694";
+          wrapper.appendChild(input);
+          const list = document.createElement("ul");
+          wrapper.appendChild(
+            makeButton("\u6DFB\u52A0", () => {
+              addListItems(draft, def.listKey, input.value);
+              input.value = "";
+              renderList(list, def);
+            }, "bbt-add-button")
+          );
+          controls.appendChild(wrapper);
+          controls.appendChild(list);
+          renderList(list, def);
+        }
+        row.appendChild(controls);
+        section2.appendChild(row);
       }
-      if (def.kind === "number") {
-        const input = document.createElement("input");
-        input.type = "number";
-        input.value = draft[def.valueKey];
-        input.addEventListener("input", () => {
-          draft[def.valueKey] = Number(input.value || 0);
-        });
-        row.appendChild(input);
-        if (def.unit) row.append(def.unit);
-      } else if (def.kind === "list") {
-        const wrapper = document.createElement("div");
-        wrapper.className = "bbt-list-row";
-        const input = document.createElement("input");
-        input.type = "text";
-        input.placeholder = def.placeholder || "\u591A\u9879\u8F93\u5165\u8BF7\u7528\u82F1\u6587\u9017\u53F7\u95F4\u9694";
-        wrapper.appendChild(input);
-        const list = document.createElement("ul");
-        wrapper.appendChild(
-          makeButton("\u6DFB\u52A0", () => {
-            addListItems(draft, def.listKey, input.value);
-            input.value = "";
-            renderList(list, def);
-          })
-        );
-        row.appendChild(wrapper);
-        row.appendChild(list);
-        renderList(list, def);
-      }
-      panel.appendChild(row);
+      panel.appendChild(section2);
     }
     const buttons = document.createElement("div");
     buttons.className = "bbt-menu-buttons";
@@ -1661,7 +1725,7 @@
         draft = normalizeSettings(getSettings());
         closePanel();
         openSettingsPanel({ getSettings, setSettings, onSave });
-      })
+      }, "bbt-secondary-button")
     );
     buttons.appendChild(
       makeButton("\u4FDD\u5B58", () => {
@@ -1669,9 +1733,9 @@
         draft = clone(saved);
         showPrompt("\u4FDD\u5B58\u6570\u636E");
         onSave?.();
-      })
+      }, "bbt-primary-button")
     );
-    buttons.appendChild(makeButton("\u5173\u95ED", closePanel));
+    buttons.appendChild(makeButton("\u5173\u95ED", closePanel, "bbt-secondary-button"));
     buttons.appendChild(
       makeButton("\u5BFC\u51FA", () => {
         const blob = new Blob([JSON.stringify(draft, null, 2)], { type: "application/json" });
@@ -1684,7 +1748,7 @@
         anchor.remove();
         URL.revokeObjectURL(url);
         showPrompt("\u8BBE\u7F6E\u5BFC\u51FA\u6210\u529F");
-      })
+      }, "bbt-secondary-button")
     );
     buttons.appendChild(
       makeButton("\u5BFC\u5165", () => {
@@ -1706,10 +1770,10 @@
           }
         });
         input.click();
-      })
+      }, "bbt-secondary-button")
     );
-    buttons.appendChild(makeButton("\u4F5C\u8005", () => window.open("https://space.bilibili.com/351422438", "_blank")));
-    buttons.appendChild(makeButton("\u8D5E\u52A9", () => window.open("https://afdian.com/a/tjxgame", "_blank")));
+    buttons.appendChild(makeButton("\u4F5C\u8005", () => window.open("https://space.bilibili.com/351422438", "_blank"), "bbt-ghost-button"));
+    buttons.appendChild(makeButton("\u8D5E\u52A9", () => window.open("https://afdian.com/a/tjxgame", "_blank"), "bbt-ghost-button"));
     panel.appendChild(buttons);
     panel.appendChild(prompt);
     document.body.appendChild(backdrop);
@@ -1728,14 +1792,16 @@
   // src/styles.js
   var BASE_CSS = `
 :root {
-  --bbt-ui-bg: #202124;
-  --bbt-ui-panel: #2a2c31;
-  --bbt-ui-panel-2: #32353b;
-  --bbt-ui-input: #3b3f46;
-  --bbt-ui-text: #fff;
-  --bbt-ui-muted: #b8c0cc;
-  --bbt-ui-button: #4c7dff;
-  --bbt-ui-button-hover: #668fff;
+  --bbt-ui-bg: #17191f;
+  --bbt-ui-panel: #23262d;
+  --bbt-ui-panel-2: #2d313a;
+  --bbt-ui-input: #111318;
+  --bbt-ui-border: rgba(255, 255, 255, 0.09);
+  --bbt-ui-text: #f6f7fb;
+  --bbt-ui-muted: #a9b0bd;
+  --bbt-ui-button: #2f73ff;
+  --bbt-ui-button-hover: #4b86ff;
+  --bbt-ui-warm: #f3b455;
   --bbt-ui-danger: #c33b3b;
   --bbt-ui-danger-hover: #dc4d4d;
   --bbt-ui-success: #20a66b;
@@ -1763,56 +1829,132 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 999999;
-  width: min(940px, calc(100vw - 28px));
-  max-height: min(860px, calc(100vh - 24px));
+  width: min(760px, calc(100vw - 24px));
+  max-height: min(820px, calc(100vh - 24px));
   overflow: auto;
-  padding: 22px;
+  padding: 0;
+  border: 1px solid var(--bbt-ui-border);
   border-radius: 8px;
-  background: var(--bbt-ui-bg);
+  background:
+    radial-gradient(circle at top left, rgba(243, 180, 85, 0.1), transparent 30%),
+    var(--bbt-ui-bg);
   color: var(--bbt-ui-text);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.46);
   font-size: 14px;
+  line-height: 1.45;
   animation: bbt-modal-in 170ms ease-out;
 }
 
 #blockedMenuUi .bbt-menu-header {
   position: sticky;
-  top: -22px;
+  top: 0;
   z-index: 2;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 14px;
-  align-items: start;
-  margin: -22px -22px 16px;
-  padding: 22px 22px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(32, 33, 36, 0.96);
+  align-items: center;
+  margin: 0;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--bbt-ui-border);
+  background: rgba(23, 25, 31, 0.96);
   backdrop-filter: blur(10px);
 }
 
 #blockedMenuUi .bbt-menu-title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.15;
   overflow-wrap: anywhere;
+}
+
+#blockedMenuUi .bbt-menu-subtitle {
+  margin-top: 4px;
+  color: var(--bbt-ui-muted);
+  font-size: 13px;
+}
+
+#blockedMenuUi .bbt-option-group {
+  margin: 14px;
+  padding: 14px;
+  border: 1px solid var(--bbt-ui-border);
+  border-radius: 8px;
+  background: rgba(35, 38, 45, 0.74);
+}
+
+#blockedMenuUi .bbt-option-group-header {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 10px;
+}
+
+#blockedMenuUi .bbt-option-group h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+#blockedMenuUi .bbt-option-group p {
+  margin: 0;
+  color: var(--bbt-ui-muted);
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 #blockedMenuUi .bbt-option {
   display: grid;
-  grid-template-columns: minmax(260px, 1fr) minmax(112px, auto) auto;
-  gap: 10px;
-  align-items: center;
-  padding: 13px;
-  margin-bottom: 10px;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, auto);
+  gap: 12px;
+  align-items: start;
+  padding: 13px 0;
+  margin: 0;
   border-radius: 6px;
-  background: var(--bbt-ui-panel);
-  border: 1px solid rgba(255, 255, 255, 0.045);
+  background: transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+#blockedMenuUi .bbt-option:first-of-type {
+  border-top: 0;
+}
+
+#blockedMenuUi .bbt-option-list {
+  grid-template-columns: 1fr;
+}
+
+#blockedMenuUi .bbt-option-main {
+  min-width: 0;
+}
+
+#blockedMenuUi .bbt-option-label {
+  color: #fbfcff;
+  font-weight: 700;
+}
+
+#blockedMenuUi .bbt-option-hint {
+  margin: 4px 0 0 42px;
+  color: var(--bbt-ui-muted);
+  font-size: 12px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+#blockedMenuUi .bbt-option-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+#blockedMenuUi .bbt-option-list .bbt-option-controls {
+  justify-content: stretch;
 }
 
 #blockedMenuUi label {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 9px;
 }
 
 #blockedMenuUi input,
@@ -1823,10 +1965,10 @@
 #blockedMenuUi input[type="text"],
 #blockedMenuUi input[type="number"] {
   min-width: 0;
-  min-height: 34px;
-  padding: 7px 9px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 4px;
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 1px solid var(--bbt-ui-border);
+  border-radius: 6px;
   background: var(--bbt-ui-input);
   color: var(--bbt-ui-text);
 }
@@ -1837,31 +1979,117 @@
   border-color: rgba(102, 143, 255, 0.42);
 }
 
+#blockedMenuUi .bbt-switch {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 20px;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  appearance: none;
+  background: #3a3e48;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+#blockedMenuUi .bbt-switch::before {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin: 2px;
+  border-radius: 999px;
+  background: #ffffff;
+  transition: transform 160ms ease;
+}
+
+#blockedMenuUi .bbt-switch:checked {
+  border-color: transparent;
+  background: var(--bbt-ui-success);
+}
+
+#blockedMenuUi .bbt-switch:checked::before {
+  transform: translateX(14px);
+}
+
+#blockedMenuUi .bbt-switch:focus-visible {
+  outline: 3px solid var(--bbt-ui-focus);
+  outline-offset: 2px;
+}
+
+#blockedMenuUi .bbt-regex-toggle {
+  min-height: 32px;
+  padding: 5px 9px 5px 7px;
+  border: 1px solid var(--bbt-ui-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #dce4f1;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+#blockedMenuUi .bbt-regex-toggle .bbt-switch {
+  width: 28px;
+  height: 16px;
+}
+
+#blockedMenuUi .bbt-regex-toggle .bbt-switch::before {
+  width: 10px;
+  height: 10px;
+}
+
+#blockedMenuUi .bbt-regex-toggle .bbt-switch:checked::before {
+  transform: translateX(12px);
+}
+
+#blockedMenuUi .bbt-number-field {
+  display: grid;
+  grid-template-columns: minmax(96px, 132px) auto;
+  align-items: center;
+  gap: 8px;
+  color: var(--bbt-ui-muted);
+  font-weight: 700;
+}
+
 #blockedMenuUi .bbt-list-row {
-  grid-column: 1 / -1;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 10px;
 }
 
 #blockedMenuUi ul {
-  grid-column: 1 / -1;
+  width: 100%;
   max-height: 120px;
   overflow: auto;
   margin: 0;
   padding: 0;
   list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 #blockedMenuUi li {
-  display: flex;
-  justify-content: space-between;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 7px;
-  padding: 7px 9px;
-  border-radius: 4px;
-  background: var(--bbt-ui-input);
+  max-width: 100%;
+  gap: 6px;
+  margin: 0;
+  padding: 6px 7px 6px 10px;
+  border: 1px solid var(--bbt-ui-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #edf2ff;
+  font-size: 12px;
+}
+
+#blockedMenuUi li span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 #blockedMenuUi button,
@@ -1909,16 +2137,60 @@
   font-weight: 700;
 }
 
+#blockedMenuUi .bbt-primary-button {
+  background: var(--bbt-ui-success);
+}
+
+#blockedMenuUi .bbt-primary-button:hover {
+  background: #26b877;
+  box-shadow: 0 8px 18px rgba(32, 166, 107, 0.24);
+}
+
+#blockedMenuUi .bbt-secondary-button,
+#blockedMenuUi .bbt-ghost-button {
+  border: 1px solid var(--bbt-ui-border);
+  background: var(--bbt-ui-panel-2);
+  color: #edf2ff;
+}
+
+#blockedMenuUi .bbt-secondary-button:hover,
+#blockedMenuUi .bbt-ghost-button:hover {
+  background: #3a404b;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+#blockedMenuUi .bbt-ghost-button {
+  color: var(--bbt-ui-muted);
+}
+
+#blockedMenuUi .bbt-chip-remove {
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  min-height: 20px;
+  padding: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #cfd6e2;
+  font-size: 12px;
+  line-height: 1;
+}
+
+#blockedMenuUi .bbt-chip-remove:hover {
+  background: var(--bbt-ui-danger);
+  box-shadow: none;
+}
+
 #blockedMenuUi .bbt-menu-buttons {
   position: sticky;
   bottom: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin: 14px -22px -22px;
-  padding: 14px 22px 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(32, 33, 36, 0.96);
+  margin: 0;
+  padding: 14px 20px 18px;
+  border-top: 1px solid var(--bbt-ui-border);
+  background: rgba(23, 25, 31, 0.96);
   backdrop-filter: blur(10px);
 }
 
@@ -2195,21 +2467,41 @@
 
 @media (max-width: 560px) {
   #blockedMenuUi {
-    padding: 16px;
+    width: calc(100vw - 16px);
   }
 
   #blockedMenuUi .bbt-menu-header {
-    top: -16px;
-    margin: -16px -16px 14px;
     padding: 16px;
+  }
+
+  #blockedMenuUi .bbt-option-group {
+    margin: 10px;
+    padding: 12px;
   }
 
   #blockedMenuUi .bbt-option {
     grid-template-columns: 1fr;
   }
 
+  #blockedMenuUi .bbt-option-hint {
+    margin-left: 0;
+  }
+
+  #blockedMenuUi .bbt-option-controls {
+    justify-content: stretch;
+  }
+
+  #blockedMenuUi .bbt-list-row {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  #blockedMenuUi .bbt-number-field {
+    grid-template-columns: minmax(0, 1fr) auto;
+    width: 100%;
+  }
+
   #blockedMenuUi .bbt-menu-buttons {
-    margin: 14px -16px -16px;
     padding: 14px 16px 16px;
   }
 
