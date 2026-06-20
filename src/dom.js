@@ -27,8 +27,30 @@ export function shouldSkipVideoBlocking(url = globalThis.location?.href || "") {
   return NO_BLOCK_URL_RULES.some((rule) => rule.test(url));
 }
 
+export function getCurrentVideoPageBv(url = globalThis.location?.href || "") {
+  const videoPageMatch = String(url).match(/^https:\/\/www\.bilibili\.com\/video\/(BV[0-9A-Za-z]+)/);
+  return videoPageMatch ? videoPageMatch[1] : "";
+}
+
+export function isCurrentVideoPageBv(bv, url = globalThis.location?.href || "") {
+  const currentBv = getCurrentVideoPageBv(url);
+  return Boolean(bv && currentBv && bv === currentBv);
+}
+
 export function uniqueElements(elements) {
   return Array.from(new Set(Array.from(elements).filter(Boolean)));
+}
+
+export function getCardVideoBvs(card) {
+  if (!card) return [];
+  const bvs = Array.from(card.querySelectorAll("a[href]"))
+    .map((link) => extractBvFromHref(link.href))
+    .filter(Boolean);
+  return Array.from(new Set(bvs));
+}
+
+export function containsMultipleVideoBvs(card) {
+  return getCardVideoBvs(card).length > 1;
 }
 
 export function getVideoCards(root = document) {
@@ -36,7 +58,14 @@ export function getVideoCards(root = document) {
     card.querySelector("a[href]"),
   );
   const anchorCards = findCandidateCards(root);
+  const currentUrl = globalThis.location?.href || "";
   return uniqueElements(directCards.concat(anchorCards)).filter((card) => {
+    if (containsMultipleVideoBvs(card)) {
+      return false;
+    }
+    if (isCurrentVideoPageBv(readCardInfo(card)?.bv, currentUrl)) {
+      return false;
+    }
     if (card.classList?.value === "bili-video-card is-rcmd" && !document.querySelector("div.recommend-container__2-line")) {
       return false;
     }

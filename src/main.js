@@ -1,6 +1,7 @@
 import { ApiClient } from "./api.js";
 import { installPageSpecificStyles } from "./ads.js";
 import { loadSettings, saveSettings } from "./config.js";
+import { getScanRoot, getStartupDelay } from "./page-lifecycle.js";
 import { loadQuickActionState, saveQuickActionState } from "./quick-action-state.js";
 import { createQuickActions } from "./quick-actions.js";
 import { Scanner } from "./scanner.js";
@@ -62,9 +63,13 @@ function bootstrap() {
     setQuickActionState,
   });
 
+  const resolveScanRoot = () => getScanRoot(document, location.href);
   const runAll = (delay = 0) => {
-    scanner.schedule(delay);
-    setTimeout(() => quickActions.scan(), delay);
+    scanner.schedule(delay, resolveScanRoot);
+    setTimeout(() => {
+      const root = resolveScanRoot();
+      if (root) quickActions.scan(root);
+    }, delay);
   };
 
   const openPanel = () =>
@@ -82,14 +87,16 @@ function bootstrap() {
   let mutationTimer = null;
   const observer = new MutationObserver(() => {
     clearTimeout(mutationTimer);
-    mutationTimer = setTimeout(() => runAll(0), 300);
+    mutationTimer = setTimeout(() => runAll(getStartupDelay(location.href)), 300);
   });
   observer.observe(document.body, { childList: true, subtree: true });
 
-  window.addEventListener("load", () => runAll(0));
+  const runAfterStartupDelay = () => runAll(getStartupDelay(location.href));
+
+  window.addEventListener("load", runAfterStartupDelay);
   window.addEventListener("resize", () => runAll(100));
-  hookHistory(() => runAll(100));
-  runAll(0);
+  hookHistory(() => runAll(getStartupDelay(location.href) || 100));
+  runAfterStartupDelay();
 }
 
 onReady(bootstrap);

@@ -1,5 +1,5 @@
 import { handleTrending, hideNonVideoElements } from "./ads.js";
-import { getVideoCards, readCardInfo, shouldSkipVideoBlocking } from "./dom.js";
+import { getVideoCards, isCurrentVideoPageBv, readCardInfo, shouldSkipVideoBlocking } from "./dom.js";
 import { applyBlockedState, removeBlockedState, syncAllOverlays } from "./overlay.js";
 import { evaluateVideo, requiredDataGroups } from "./rules.js";
 
@@ -18,10 +18,11 @@ export class Scanner {
     }
   }
 
-  schedule(delay = 250) {
+  schedule(delay = 250, root = document) {
     clearTimeout(this.scanTimer);
     this.scanTimer = setTimeout(() => {
-      this.scan();
+      const scanRoot = typeof root === "function" ? root() : root;
+      if (scanRoot) this.scan(scanRoot);
     }, delay);
   }
 
@@ -97,6 +98,10 @@ export class Scanner {
   async processCard(card) {
     const baseInfo = readCardInfo(card);
     if (!baseInfo) return;
+    if (isCurrentVideoPageBv(baseInfo.bv)) {
+      if (card.dataset?.bbtBlocked === "1") removeBlockedState(card);
+      return;
+    }
 
     const settings = this.getSettings();
     const video = this.mergeVideo(baseInfo.bv, baseInfo);

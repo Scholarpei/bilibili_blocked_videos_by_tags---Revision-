@@ -20,6 +20,7 @@
 // @grant           GM_setValue
 // @grant           GM_getValue
 // @grant           GM_addStyle
+// @run-at          document-idle
 // ==/UserScript==
 "use strict";
 (() => {
@@ -646,6 +647,19 @@
     ].join("-");
   }
 
+  // src/page-lifecycle.js
+  var VIDEO_DETAIL_STARTUP_DELAY = 1200;
+  function isVideoDetailPage(url = globalThis.location?.href || "") {
+    return /^https:\/\/www\.bilibili\.com\/video\/(?:BV[0-9A-Za-z]+|av[0-9]+)/.test(String(url));
+  }
+  function getScanRoot(root = document, url = globalThis.location?.href || "") {
+    if (!isVideoDetailPage(url)) return root;
+    return root.querySelector(".right-container") || root.querySelector(".right-container-inner") || null;
+  }
+  function getStartupDelay(url = globalThis.location?.href || "") {
+    return isVideoDetailPage(url) ? VIDEO_DETAIL_STARTUP_DELAY : 0;
+  }
+
   // src/quick-action-state.js
   var QUICK_ACTION_STATE_KEY = "GM_quickActionState";
   var EMPTY_STATE = Object.freeze({
@@ -773,15 +787,38 @@
   function shouldSkipVideoBlocking(url = globalThis.location?.href || "") {
     return NO_BLOCK_URL_RULES.some((rule) => rule.test(url));
   }
+  function getCurrentVideoPageBv(url = globalThis.location?.href || "") {
+    const videoPageMatch = String(url).match(/^https:\/\/www\.bilibili\.com\/video\/(BV[0-9A-Za-z]+)/);
+    return videoPageMatch ? videoPageMatch[1] : "";
+  }
+  function isCurrentVideoPageBv(bv, url = globalThis.location?.href || "") {
+    const currentBv = getCurrentVideoPageBv(url);
+    return Boolean(bv && currentBv && bv === currentBv);
+  }
   function uniqueElements(elements) {
     return Array.from(new Set(Array.from(elements).filter(Boolean)));
+  }
+  function getCardVideoBvs(card) {
+    if (!card) return [];
+    const bvs = Array.from(card.querySelectorAll("a[href]")).map((link) => extractBvFromHref(link.href)).filter(Boolean);
+    return Array.from(new Set(bvs));
+  }
+  function containsMultipleVideoBvs(card) {
+    return getCardVideoBvs(card).length > 1;
   }
   function getVideoCards(root = document) {
     const directCards = Array.from(root.querySelectorAll(VIDEO_CARD_SELECTOR)).filter(
       (card) => card.querySelector("a[href]")
     );
     const anchorCards = findCandidateCards(root);
+    const currentUrl = globalThis.location?.href || "";
     return uniqueElements(directCards.concat(anchorCards)).filter((card) => {
+      if (containsMultipleVideoBvs(card)) {
+        return false;
+      }
+      if (isCurrentVideoPageBv(readCardInfo(card)?.bv, currentUrl)) {
+        return false;
+      }
       if (card.classList?.value === "bili-video-card is-rcmd" && !document.querySelector("div.recommend-container__2-line")) {
         return false;
       }
@@ -1376,10 +1413,11 @@
         this.logger.log("[BilibiliBlocker]", ...args);
       }
     }
-    schedule(delay = 250) {
+    schedule(delay = 250, root = document) {
       clearTimeout(this.scanTimer);
       this.scanTimer = setTimeout(() => {
-        this.scan();
+        const scanRoot = typeof root === "function" ? root() : root;
+        if (scanRoot) this.scan(scanRoot);
       }, delay);
     }
     scan(root = document) {
@@ -1445,6 +1483,10 @@
     async processCard(card) {
       const baseInfo = readCardInfo(card);
       if (!baseInfo) return;
+      if (isCurrentVideoPageBv(baseInfo.bv)) {
+        if (card.dataset?.bbtBlocked === "1") removeBlockedState(card);
+        return;
+      }
       const settings = this.getSettings();
       const video = this.mergeVideo(baseInfo.bv, baseInfo);
       let result = evaluateVideo(video, settings);
@@ -2587,9 +2629,13 @@
       getQuickActionState: getQuickActionState2,
       setQuickActionState
     });
+    const resolveScanRoot = () => getScanRoot(document, location.href);
     const runAll = (delay = 0) => {
-      scanner.schedule(delay);
-      setTimeout(() => quickActions.scan(), delay);
+      scanner.schedule(delay, resolveScanRoot);
+      setTimeout(() => {
+        const root = resolveScanRoot();
+        if (root) quickActions.scan(root);
+      }, delay);
     };
     const openPanel = () => openSettingsPanel({
       getSettings,
@@ -2603,13 +2649,14 @@
     let mutationTimer = null;
     const observer = new MutationObserver(() => {
       clearTimeout(mutationTimer);
-      mutationTimer = setTimeout(() => runAll(0), 300);
+      mutationTimer = setTimeout(() => runAll(getStartupDelay(location.href)), 300);
     });
     observer.observe(document.body, { childList: true, subtree: true });
-    window.addEventListener("load", () => runAll(0));
+    const runAfterStartupDelay = () => runAll(getStartupDelay(location.href));
+    window.addEventListener("load", runAfterStartupDelay);
     window.addEventListener("resize", () => runAll(100));
-    hookHistory(() => runAll(100));
-    runAll(0);
+    hookHistory(() => runAll(getStartupDelay(location.href) || 100));
+    runAfterStartupDelay();
   }
   onReady(bootstrap);
 })();
